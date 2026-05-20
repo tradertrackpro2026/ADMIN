@@ -122,9 +122,13 @@ button:active{transform:translateY(0)}
   .login-box{width:calc(100% - 32px);max-width:380px;padding:32px 22px;border-radius:16px}
 }
 
-/* TOPBAR — compacto en móvil */
+/* TOPBAR — compacto en móvil + notch iOS */
 @media(max-width:768px){
-  .topbar{padding:10px 14px;gap:8px}
+  .topbar{
+    padding: 8px 14px 8px 14px;
+    padding-top: max(48px, calc(env(safe-area-inset-top) + 8px));
+    gap:8px;
+  }
   .badge-priv{display:none}
   .topbar-title-wrap .subtitle{display:none}
   .topbar-logo-icon{width:30px;height:30px;font-size:14px}
@@ -135,15 +139,15 @@ button:active{transform:translateY(0)}
 
 /* MAIN WRAP — padding reducido */
 @media(max-width:600px){
-  .main-wrap{padding:12px 12px;padding-bottom:32px}
+  .main-wrap{padding:10px 10px;padding-bottom:32px}
 }
 
 /* KPI GRID — 2x2 en móvil */
 @media(max-width:768px){
-  .kpi-grid{grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
-  .kbox{padding:12px 10px}
-  .kbox .val{font-size:22px}
-  .kbox .lbl{font-size:8px;letter-spacing:1.5px;margin-bottom:4px}
+  .kpi-grid{grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px}
+  .kbox{padding:10px 8px}
+  .kbox .val{font-size:20px}
+  .kbox .lbl{font-size:8px;letter-spacing:1px;margin-bottom:3px}
 }
 
 /* CREATE FORM — apilado en móvil */
@@ -172,39 +176,81 @@ button:active{transform:translateY(0)}
 
 /* EMPRESA CARD — compacta en móvil */
 @media(max-width:600px){
-  .empresa-header{padding:12px 12px;gap:8px}
-  .empresa-name{font-size:13px;gap:7px}
-  .empresa-avatar{width:30px;height:30px;font-size:12px;border-radius:8px}
-  .empresa-stats{gap:10px}
-  .esta-val{font-size:13px}
+  .empresa-card{margin-bottom:8px;border-radius:10px}
+  .empresa-header{padding:10px 12px;gap:6px}
+  .empresa-name{font-size:13px;gap:6px}
+  .empresa-avatar{width:28px;height:28px;font-size:11px;border-radius:7px;flex-shrink:0}
+  .empresa-stats{gap:8px}
+  .esta{text-align:center}
+  .esta-val{font-size:13px;font-weight:800}
   .esta-lbl{font-size:7px}
-  .empresa-toolbar{padding:8px 12px;gap:6px}
+  .empresa-toolbar{padding:7px 12px;gap:5px}
   .empresa-toolbar-btns{flex-wrap:wrap;gap:5px}
+  .chevron{font-size:12px}
 }
 
-/* LICENSE ROW — formato tarjeta en móvil */
+/* LICENSE ROW — tarjeta ultra-compacta en móvil */
 @media(max-width:600px){
   .lic-row-header{display:none!important}
   .lic-row{
-    display:flex;
-    flex-direction:column;
-    gap:8px;
-    padding:12px 12px;
-    border-bottom:1px solid rgba(30,37,64,.5);
+    display:grid;
+    grid-template-columns:1fr auto;
+    grid-template-rows:auto auto auto;
+    gap:4px 8px;
+    padding:9px 12px;
+    border-bottom:1px solid rgba(30,37,64,.4);
+    align-items:start;
+  }
+  /* código — primera columna, primera fila */
+  .lic-row>div:nth-child(1){
+    grid-column:1;grid-row:1;
+    align-self:center;
+  }
+  /* estado — segunda columna, primera fila */
+  .lic-row>div:nth-child(2){
+    grid-column:2;grid-row:1;
+    align-self:center;
+  }
+  /* dispositivos — fila completa */
+  .lic-row>div:nth-child(3){
+    grid-column:1/-1;grid-row:2;
+  }
+  /* límite y fecha — ocultos */
+  .lic-row>div:nth-child(4),
+  .lic-row>div:nth-child(5){display:none!important}
+  /* acciones — fila completa */
+  .lic-row>div:nth-child(6){
+    grid-column:1/-1;grid-row:3;
   }
   .lic-row:last-child{border-bottom:none}
   .lic-row .hide-mob{display:none}
-  .lic-row .code-col{flex-direction:row;justify-content:space-between;align-items:center}
-  .lic-row .code-val{font-size:12px}
-  .lic-row-actions{display:flex;flex-wrap:wrap;gap:5px;width:100%}
-  .lic-row-actions button{flex:1;min-width:44px;justify-content:center;text-align:center}
-  .btn-accion-texto{display:none}
+  /* código compacto */
+  .lic-row .code-col{align-items:center}
+  .lic-row .code-val{font-size:11px;letter-spacing:0}
+  /* dispositivos compactos */
+  .lic-row .dev-bar{height:3px;margin-top:3px;margin-bottom:3px}
+  /* IDs de dispositivos: más pequeños */
+  .lic-row [style*="FP"],[style*="font-size:9px"]{font-size:9px!important}
+  /* botones de acción: todos en una fila ajustada */
+  .lic-row>div:nth-child(6)>div{
+    display:flex;flex-wrap:nowrap;gap:4px;width:100%;
+  }
+  .lic-row>div:nth-child(6)>div>button{
+    flex:1;padding:5px 4px;font-size:10px;min-width:0;
+  }
 }
 
 /* CODES BOX — scroll horizontal para códigos largos */
 @media(max-width:600px){
   .code-text{font-size:11px;word-break:break-all}
   .codes-box{font-size:12px}
+  /* Card sections más compactas */
+  .card{padding:14px 12px}
+  .sec-title{font-size:9px;margin-bottom:12px;padding-bottom:8px}
+  /* Empresa card: texto número de licencias más pequeño */
+  .empresa-name>span{font-size:9px!important}
+  /* Guía rápida más compacta */
+  .quick-guide{line-height:1.7;padding:10px 12px}
 }
 
 /* TOAST — bottom seguro en iOS */
@@ -741,7 +787,7 @@ function renderLicRow(l) {
       ? '<button class="btn-r" onclick="revokeLicense(\'' + l.id + '\')" style="padding:4px 9px;font-size:10px" title="Revocar">🚫</button>'
       : '<button class="btn-o" onclick="restoreLicense(\'' + l.id + '\')" style="padding:4px 9px;font-size:10px" title="Restaurar">♻</button>') +
     '<button class="btn-gray" onclick="resetActivation(\'' + l.id + '\')" style="padding:4px 9px;font-size:10px" title="Reset TODOS los dispositivos">🔄</button>' +
-    '<button class="btn-gray" onclick="changeDeviceLimit(\'' + l.id + '\')" style="padding:4px 9px;font-size:10px;border-color:rgba(77,159,255,.4);color:#4d9fff" title="Cambiar límite de dispositivos">⚙ Disp.</button>' +
+    '<button class="btn-gray" onclick="changeDeviceLimit(\'' + l.id + '\')" style="padding:4px 9px;font-size:10px;border-color:rgba(77,159,255,.4);color:#4d9fff" title="Cambiar límite de dispositivos">⚙<span class="btn-accion-texto"> Disp.</span></button>' +
     '<button class="btn-del" onclick="deleteLicense(\'' + l.id + '\')" title="Eliminar código permanentemente">🗑</button>' +
   '</div>';
 
