@@ -724,7 +724,7 @@ function renderEmpresas(byEmpresa, keys) {
     var sinUsar = lics.filter(function(l){ return l.activations === 0 && l.active; }).length;
     var revocadas = lics.filter(function(l){ return !l.active; }).length;
     var color = getColor(empresa);
-    var isOpen = expandedEmpresas[empresa] !== false; // default open
+    var isOpen = expandedEmpresas[empresa] === true; // default closed
     var initials = empresa.substring(0, 2).toUpperCase();
 
     return '<div class="empresa-card" id="ecard-' + safeB64(empresa).replace(/=/g,'') + '">' +
