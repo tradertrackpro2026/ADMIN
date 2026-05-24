@@ -211,10 +211,8 @@ button:active{transform:translateY(0)}
     grid-column:2;grid-row:1;
     align-self:center;
   }
-  /* dispositivos — fila completa */
-  .lic-row>div:nth-child(3){
-    grid-column:1/-1;grid-row:2;
-  }
+  /* dispositivos — oculto en móvil, el botón pasa a acciones */
+  .lic-row>div:nth-child(3){display:none!important}
   /* límite y fecha — ocultos */
   .lic-row>div:nth-child(4),
   .lic-row>div:nth-child(5){display:none!important}
@@ -274,6 +272,10 @@ button:active{transform:translateY(0)}
   .quick-guide{font-size:12px;line-height:2;padding:12px 14px}
   .quick-guide span{display:block;margin-bottom:2px}
 }
+
+/* MOB-ONLY — visible solo en móvil */
+.mob-only{display:none!important}
+@media(max-width:600px){.mob-only{display:inline-flex!important;align-items:center}}
 
 /* DEVICE PANEL FLOTANTE */
 .dev-panel-overlay{position:fixed;inset:0;z-index:9990;background:rgba(5,7,18,.65);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center}
@@ -779,6 +781,10 @@ function renderLicRow(l) {
     ? '<button class="btn-dev-view" onclick="showDevicesPanel(\'' + l.id + '\')">&#128241; Ver dispositivos</button>'
     : '';
 
+  var devViewBtnMob = devList.length > 0
+    ? '<button class="btn-dev-view mob-only" onclick="showDevicesPanel(\'' + l.id + '\')" style="margin-top:0" title="Ver dispositivos">&#128241;</button>'
+    : '';
+
   var devCol = '<div>' +
     '<div style="font-size:11px;font-weight:700;color:' + actColor + ';font-family:\'Exo 2\',sans-serif">' + devCount + ' / ' + l.maxActivations + '</div>' +
     '<div class="dev-bar"><div class="dev-fill" style="width:' + actPct + '%;background:' + actColor + '"></div></div>' +
@@ -788,6 +794,7 @@ function renderLicRow(l) {
   var createDate = l.createdAt ? new Date(l.createdAt).toLocaleDateString('es', {day:'2-digit',month:'short',year:'2-digit'}) : '—';
 
   var actions = '<div style="display:flex;gap:5px;flex-wrap:wrap">' +
+    devViewBtnMob +
     '<button class="btn-copy" onclick="copyText(\'' + l.id + '\', this)" title="Copiar código">📋</button>' +
     (l.active
       ? '<button class="btn-r" onclick="revokeLicense(\'' + l.id + '\')" style="padding:4px 9px;font-size:10px" title="Revocar">🚫</button>'
